@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roof Today — Seattle's Premier Roofing Company</title>
+  <meta name="description" content="Seattle's premier roofing company. Honest, no-pressure, premium work built for real homeowners. Free estimates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & VARIABLES ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6B2B;
+      --dark:   #0D1117;
+      --dark2:  #161B22;
+      --dark3:  #21262D;
+      --light:  #F0F6FC;
+      --gray:   #8B949E;
+      --white:  #FFFFFF;
+      --green:  #3FB950;
+      --display: 'Bebas Neue', sans-serif;
+      --body:    'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--dark);
+      color: var(--light);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── UTILITY ───────────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .font-display { font-family: var(--display); letter-spacing: .03em; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0 28px; height: 48px; border-radius: 8px;
+      font-family: var(--body); font-weight: 700; font-size: .9rem;
+      text-transform: uppercase; letter-spacing: .1em;
+      cursor: pointer; border: none; transition: opacity .2s, background .2s, transform .15s;
+    }
+    .btn:hover { opacity: .9; }
+    .btn:active { transform: scale(.97); }
+    .btn-orange { background: var(--orange); color: var(--white); }
+    .btn-outline {
+      background: transparent; color: var(--orange);
+      border: 2px solid var(--orange);
+    }
+    .btn-outline:hover { background: var(--orange); color: var(--white); }
+    .btn-lg { height: 56px; padding: 0 36px; font-size: 1rem; }
+    .btn-full { width: 100%; }
+
+    /* ── NAV ───────────────────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background .3s, box-shadow .3s, border-color .3s;
+    }
+    #nav.scrolled {
+      background: rgba(13,17,23,.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 30px rgba(0,0,0,.3);
+      border-bottom: 1px solid var(--dark3);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 80px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--display); font-size: 1.8rem; letter-spacing: .05em;
+      color: var(--orange); cursor: pointer;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      font-size: .85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--gray);
+    }
+    .nav-links a, .nav-links button {
+      background: none; border: none; font-family: inherit;
+      font-size: inherit; font-weight: inherit; text-transform: inherit;
+      letter-spacing: inherit; color: var(--gray); cursor: pointer;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links button:hover { color: var(--white); }
+    .nav-toggle {
+      display: none; background: none; border: none;
+      color: var(--light); cursor: pointer; padding: 4px;
+    }
+
+    /* Mobile menu */
+    #mobile-menu {
+      display: none; flex-direction: column; gap: 4px;
+      position: absolute; top: 80px; left: 0; right: 0;
+      background: var(--dark2); border-bottom: 1px solid var(--dark3);
+      padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu button {
+      background: none; border: none; text-align: left;
+      font-family: var(--body); font-size: .9rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--light); padding: 10px 12px; border-radius: 6px;
+      cursor: pointer; transition: background .2s;
+    }
+    #mobile-menu button:hover { background: var(--dark3); }
+
+    @media (max-width: 767px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+    }
+
+    /* ── HERO ──────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100dvh; display: flex; align-items: center;
+      padding-top: 80px; position: relative; overflow: hidden;
+      background:
+        repeating-linear-gradient(45deg,
+          rgba(255,255,255,.015) 0px,
+          rgba(255,255,255,.015) 2px,
+          transparent 2px, transparent 10px),
+        var(--dark);
+    }
+    #hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, var(--dark));
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; padding: 60px 0; }
+    .hero-headline {
+      font-family: var(--display); font-size: clamp(4rem, 10vw, 7.5rem);
+      line-height: .9; color: var(--white); margin-bottom: 24px;
+    }
+    .hero-headline .accent { color: var(--orange); }
+    .hero-sub {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--gray);
+      margin-bottom: 40px; max-width: 600px; line-height: 1.7;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(22,27,34,.6); backdrop-filter: blur(8px);
+      border: 1px solid var(--dark3); border-radius: 999px;
+      padding: 10px 20px; font-size: .85rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    .hero-stars { display: flex; gap: -4px; }
+    .star-icon { color: var(--orange); }
+    .hero-badge-count { color: var(--orange); }
+
+    /* ── TRUST BAR ─────────────────────────────────────────────── */
+    #trust {
+      background: var(--orange); color: var(--dark);
+      padding: 20px 0;
+    }
+    .trust-items {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 12px 32px; align-items: center;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; text-transform: uppercase; font-size: .9rem;
+      letter-spacing: .08em;
+    }
+
+    /* ── SECTION BASE ──────────────────────────────────────────── */
+    .section { padding: 96px 0; }
+
+    .section-title {
+      font-family: var(--display); font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--white); text-align: center; margin-bottom: 64px;
+    }
+
+    /* ── SERVICES ──────────────────────────────────────────────── */
+    #services { background: var(--dark); border-top: 1px solid var(--dark3); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--dark3); padding: 32px; border-radius: 12px;
+      border-left: 4px solid transparent;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .service-card:hover {
+      border-left-color: var(--orange);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.5);
+    }
+    .service-icon {
+      width: 48px; height: 48px; border-radius: 8px;
+      background: var(--dark2); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 24px;
+      color: var(--orange); font-size: 1.4rem; transition: background .3s;
+    }
+    .service-card:hover .service-icon { background: rgba(255,107,43,.12); }
+    .service-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+    .service-card p { color: var(--gray); line-height: 1.7; }
+
+    /* ── WHY US ────────────────────────────────────────────────── */
+    #why-us { background: var(--dark2); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 48px;
+    }
+    .why-item { position: relative; }
+    .why-num {
+      font-family: var(--display); font-size: 7rem; color: rgba(255,107,43,.08);
+      position: absolute; top: -32px; left: -16px; z-index: 0; line-height: 1;
+    }
+    .why-body { position: relative; z-index: 1; }
+    .why-body h3 { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+    .why-body p { color: var(--gray); font-size: 1.05rem; line-height: 1.7; }
+
+    /* ── REVIEWS ───────────────────────────────────────────────── */
+    #reviews { background: var(--dark); border-top: 1px solid var(--dark3); border-bottom: 1px solid var(--dark3); }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--dark3); border: 1px solid var(--dark2);
+      border-radius: 12px; padding: 28px;
+      display: flex; flex-direction: column;
+    }
+    .review-stars { display: flex; gap: 4px; color: var(--orange); margin-bottom: 16px; }
+    .review-text {
+      color: var(--light); line-height: 1.7; font-style: italic;
+      flex-grow: 1; margin-bottom: 24px;
+    }
+    .review-author { font-weight: 700; color: var(--white); }
+    .review-loc { color: var(--gray); font-size: .85rem; margin-top: 2px; }
+
+    /* ── ABOUT ─────────────────────────────────────────────────── */
+    #about { background: var(--dark2); overflow: hidden; }
+    .about-inner {
+      display: flex; gap: 64px; align-items: center; flex-wrap: wrap;
+    }
+    .about-text { flex: 1; min-width: 280px; max-width: 600px; }
+    .about-text h2 {
+      font-family: var(--display); font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--white); margin-bottom: 24px;
+    }
+    .about-text p { color: var(--gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 32px; }
+    .about-card {
+      background: var(--dark3); border-radius: 12px; padding: 24px;
+      border: 1px solid var(--dark); display: flex; flex-direction: column; gap: 0;
+    }
+    .about-row { display: flex; gap: 16px; align-items: flex-start; padding: 12px 0; }
+    .about-row + .about-row { border-top: 1px solid var(--dark2); }
+    .about-row-icon { color: var(--orange); flex-shrink: 0; margin-top: 2px; }
+    .about-row-label { font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .about-row-val { color: var(--gray); line-height: 1.5; }
+    .about-visual {
+      flex: 0 0 auto; display: flex; justify-content: center;
+      align-items: center; width: 340px; height: 340px; position: relative;
+    }
+    .about-visual-box1 {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--dark3), var(--dark));
+      border-radius: 16px; transform: rotate(3deg);
+    }
+    .about-visual-box2 {
+      position: absolute; inset: 0;
+      background: var(--orange); opacity: .08;
+      border-radius: 16px; transform: rotate(-6deg);
+    }
+    .about-visual-icon {
+      position: relative; z-index: 1; color: var(--orange);
+      opacity: .7;
+    }
+
+    @media (max-width: 767px) {
+      .about-visual { width: 220px; height: 220px; }
+    }
+
+    /* ── CONTACT FORM ──────────────────────────────────────────── */
+    #contact {
+      background: var(--orange); padding: 96px 0; position: relative; overflow: hidden;
+    }
+    .form-card {
+      max-width: 720px; margin: 0 auto;
+      background: var(--dark); border-radius: 20px;
+      padding: clamp(32px, 6vw, 60px); box-shadow: 0 40px 80px rgba(0,0,0,.5);
+    }
+    .form-card h2 {
+      font-family: var(--display); font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--white); margin-bottom: 8px;
+    }
+    .form-card > p { color: var(--gray); margin-bottom: 32px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label {
+      font-size: .75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--gray);
+    }
+    .form-group input, .form-group textarea {
+      font-family: var(--body); font-size: 1rem;
+      background: var(--dark2); border: 1px solid var(--dark3);
+      border-radius: 8px; color: var(--white); padding: 0 16px;
+      height: 48px; outline: none; transition: border-color .2s;
+      width: 100%;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--dark3); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--orange); }
+    .form-group textarea { height: 120px; padding: 12px 16px; resize: vertical; }
+    .form-error { font-size: .8rem; color: #f87171; display: none; margin-top: 2px; }
+    .form-error.show { display: block; }
+    #form-success {
+      display: none; background: rgba(63,185,80,.12); border: 1px solid var(--green);
+      border-radius: 10px; padding: 16px; color: var(--green); font-weight: 700;
+      text-align: center; margin-top: 16px;
+    }
+    #form-success.show { display: block; }
+    #submit-btn { margin-top: 8px; }
+    #submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    footer {
+      background: var(--dark); border-top: 1px solid var(--dark3);
+      padding: 48px 0;
+    }
+    .footer-inner {
+      display: flex; flex-wrap: wrap; justify-content: space-between;
+      align-items: center; gap: 24px;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--display); font-size: 1.5rem; color: var(--white);
+    }
+    .footer-logo span { color: var(--orange); }
+    .footer-tagline { color: var(--gray); font-style: italic; }
+    .footer-copy { color: var(--gray); font-size: .85rem; text-align: right; }
+    .footer-copy a {
+      display: block; font-size: .75rem; color: var(--gray);
+      opacity: .4; margin-top: 4px; transition: opacity .2s, color .2s;
+    }
+    .footer-copy a:hover { opacity: 1; color: var(--orange); }
+
+    /* ── SVG ICONS ─────────────────────────────────────────────── */
+    .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-lg { width: 28px; height: 28px; }
+    .icon-xl { width: 120px; height: 120px; stroke-width: 1; }
+
+    /* ── STAR RATING ───────────────────────────────────────────── */
+    .star { color: var(--orange); }
+
+    /* ── ANIMATIONS ────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp .7s ease both; }
+    .fade-up-delay-1 { animation-delay: .1s; }
+    .fade-up-delay-2 { animation-delay: .2s; }
+    .fade-up-delay-3 { animation-delay: .35s; }
+
+    /* ── SCROLL FADE IN ────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="scrollTo('hero')">
+        <!-- House icon -->
+        <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        ROOF TODAY
+      </div>
+
+      <div class="nav-links">
+        <button onclick="scrollTo('services')">Services</button>
+        <button onclick="scrollTo('why-us')">Why Us</button>
+        <button onclick="scrollTo('reviews')">Reviews</button>
+        <button onclick="scrollTo('contact')">Contact</button>
+        <button class="btn btn-orange" onclick="scrollTo('contact')">Free Estimate</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <svg class="icon icon-lg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu">
+      <button onclick="mobileScrollTo('services')">Services</button>
+      <button onclick="mobileScrollTo('why-us')">Why Us</button>
+      <button onclick="mobileScrollTo('reviews')">Reviews</button>
+      <button onclick="mobileScrollTo('contact')">Contact</button>
+      <button onclick="mobileScrollTo('contact')" style="background:var(--orange);color:#fff;border-radius:8px;margin-top:4px;">Free Estimate</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="hero-headline fade-up">
+        YOUR ROOF.<br>
+        <span class="accent">DONE RIGHT.</span><br>
+        DONE TODAY.
+      </h1>
+      <p class="hero-sub fade-up fade-up-delay-1">
+        Seattle's premier roofing company. Honest, no-pressure, premium work built for real homeowners.
+      </p>
+      <div class="hero-ctas fade-up fade-up-delay-2">
+        <button class="btn btn-orange btn-lg" onclick="scrollTo('contact')">Get Free Estimate</button>
+        <a href="tel:8447602914" class="btn btn-outline btn-lg">Call (844) 760-2914</a>
+      </div>
+      <div class="hero-badge fade-up fade-up-delay-3">
+        <span>⭐⭐⭐⭐⭐</span>
+        <span><span class="hero-badge-count">500+</span> Satisfied Customers</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TRUST BAR
+════════════════════════════════════════════════════════════════ -->
+<section id="trust">
+  <div class="container">
+    <div class="trust-items">
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        No Pressure
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Beat Any Quote
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Free Inspection
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Seattle's Choice
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SERVICES
+════════════════════════════════════════════════════════════════ -->
+<section id="services" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">WHAT WE DO</h2>
+    <div class="services-grid">
+      <!-- ✏️ EDIT: Change service titles and descriptions here -->
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Roof Replacement</h3>
+        <p>Complete tear-off and installation with premium materials that last decades.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3>Roof Repair</h3>
+        <p>Fast, reliable fixes for leaks, missing shingles, and storm damage.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3>Vent &amp; Board Replacement</h3>
+        <p>Ensuring proper ventilation and solid decking beneath your new roof.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3>Manufactured Home Roofing</h3>
+        <p>Specialized solutions designed specifically for manufactured homes.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Free Roof Inspection</h3>
+        <p>Comprehensive, honest assessment of your current roof's condition.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <h3>Budget &amp; Financing</h3>
+        <p>We work with you to find the best option for your budget without pressure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WHY US
+════════════════════════════════════════════════════════════════ -->
+<section id="why-us" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">WHY HOMEOWNERS CHOOSE ROOF TODAY</h2>
+    <div class="why-grid">
+      <!-- ✏️ EDIT: Change the why-us points here -->
+      <div class="why-item reveal">
+        <div class="why-num">01</div>
+        <div class="why-body">
+          <h3>No Pressure Ever</h3>
+          <p>We educate, we don't sell. You get all the facts and time you need to make the right decision for your home.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">02</div>
+        <div class="why-body">
+          <h3>Prices That Beat Competitors</h3>
+          <p>Premium materials and expert installation without the inflated overhead of massive corporate roofing chains.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">03</div>
+        <div class="why-body">
+          <h3>100% Confidence Guarantee</h3>
+          <p>From tear-off to cleanup, we handle everything with precision and respect for your property.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     REVIEWS
+════════════════════════════════════════════════════════════════ -->
+<section id="reviews" class="section">
+  <div class="container">
+    <h2 class="section-title reveal">WHAT OUR CUSTOMERS SAY</h2>
+    <div class="reviews-grid">
+      <!-- ✏️ EDIT: Change reviews here. Add more by copying a review-card block. -->
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Carol was calm, instructive and very helpful explaining all options. Not pushy at all — helped us choose the best option for our budget."</p>
+        <div class="review-author">Randy</div>
+        <div class="review-loc">Seattle</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Aaron helped us find the best options at a price significantly lower than other quotes. They covered everything — replacement, vents, boards."</p>
+        <div class="review-author">Eric &amp; Kelsey W.</div>
+        <div class="review-loc">Seattle</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Shaun and Will came out, gave me a fair price, and educated me on the full scope of work. I felt 100% confident choosing them."</p>
+        <div class="review-author">Nedzad H.</div>
+        <div class="review-loc">Tukwila</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Being retired with a limited income, Shaun worked very hard to find the best roofing product we could afford. Very happy."</p>
+        <div class="review-author">Susan Smith</div>
+        <div class="review-loc">Seattle</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"Shaun's presentation was so thorough I felt 100% confident choosing Roof Today. Thank you for working with my budget."</p>
+        <div class="review-author">Reem Shaker</div>
+        <div class="review-loc">Bellevue</div>
+      </div>
+      <div class="review-card reveal">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p class="review-text">"We had four companies come out — Roof Today stood out completely. Shaun did everything possible to make this happen for us."</p>
+        <div class="review-author">JoAnn Ortiz</div>
+        <div class="review-loc">Seattle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-text reveal">
+        <h2>ABOUT ROOF TODAY</h2>
+        <!-- ✏️ EDIT: Change the about text here -->
+        <p>We believe that replacing your roof shouldn't be stressful. No high-pressure sales tactics. No confusing jargon. Just honest assessments, fair pricing, and premium craftsmanship that protects your home for decades.</p>
+        <div class="about-card">
+          <!-- ✏️ EDIT: Change address and phone here -->
+          <div class="about-row">
+            <div class="about-row-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="about-row-label">Office Location</div>
+              <div class="about-row-val">18323 Bothell Everett Hwy #345<br>Bothell, WA 98012</div>
+            </div>
+          </div>
+          <div class="about-row">
+            <div class="about-row-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.7A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="about-row-label">Phone</div>
+              <div class="about-row-val">(844) 760-2914</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-visual-box1"></div>
+        <div class="about-visual-box2"></div>
+        <svg class="icon-xl about-visual-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     CONTACT FORM
+════════════════════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="form-card reveal">
+      <h2>GET YOUR FREE ESTIMATE</h2>
+      <p>Fill out the form below and we'll reach out to schedule your free inspection.</p>
+
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Full Name *</label>
+            <input type="text" id="f-name" name="name" placeholder="John Doe" autocomplete="name" />
+            <span class="form-error" id="err-name">Please enter your name</span>
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone *</label>
+            <input type="tel" id="f-phone" name="phone" placeholder="(555) 555-5555" autocomplete="tel" />
+            <span class="form-error" id="err-phone">Please enter a valid phone number</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="f-email">Email *</label>
+          <input type="email" id="f-email" name="email" placeholder="john@example.com" autocomplete="email" />
+          <span class="form-error" id="err-email">Please enter a valid email address</span>
+        </div>
+
+        <div class="form-group">
+          <label for="f-address">Street Address *</label>
+          <input type="text" id="f-address" name="address" placeholder="123 Main St, Seattle, WA" autocomplete="street-address" />
+          <span class="form-error" id="err-address">Please enter your address</span>
+        </div>
+
+        <div class="form-group">
+          <label for="f-message">Message (Optional)</label>
+          <textarea id="f-message" name="message" placeholder="Tell us about your roof..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-orange btn-lg btn-full" id="submit-btn">
+          Request Estimate
+        </button>
+
+        <div id="form-success">
+          ✅ Message sent! We'll be in touch shortly.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg class="icon" viewBox="0 0 24 24" style="color:var(--orange)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>ROOF TODAY</span>
+      </div>
+      <p class="footer-tagline">Honest Roofing. Real Results.</p>
+      <div class="footer-copy">
+        <span id="year"></span> Roof Today. All Rights Reserved.
+        <!-- ✏️ EDIT: Remove the line below if you don't want the admin login link in the footer -->
+        <a href="/admin/login">Admin Login</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Copyright year ─────────────────────────────────── */
+  document.getElementById('year').textContent = '© ' + new Date().getFullYear();
+
+  /* ── Sticky nav ─────────────────────────────────────── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  /* ── Smooth scroll ──────────────────────────────────── */
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* ── Mobile menu ────────────────────────────────────── */
+  const mobileMenu = document.getElementById('mobile-menu');
+  function toggleMenu() {
+    mobileMenu.classList.toggle('open');
+  }
+  function mobileScrollTo(id) {
+    mobileMenu.classList.remove('open');
+    setTimeout(() => scrollTo(id), 50);
+  }
+
+  /* ── Scroll reveal ──────────────────────────────────── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── Contact form ───────────────────────────────────── */
+  /*
+   * ✏️ EDIT: Change this URL to wherever your API lives.
+   *
+   * If you're using this file WITH the Replit app running, keep it as-is.
+   * If you're using this as a standalone page, point to your backend URL, e.g.:
+   *   const API_URL = 'https://your-app.replit.app/api/leads';
+   */
+  const API_URL = '/api/leads';
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const successBox = document.getElementById('form-success');
+
+  function showError(id, show) {
+    document.getElementById(id).classList.toggle('show', show);
+  }
+
+  function validate() {
+    const name    = document.getElementById('f-name').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const address = document.getElementById('f-address').value.trim();
+    let ok = true;
+
+    showError('err-name',    name.length < 2);     if (name.length < 2)     ok = false;
+    showError('err-phone',   phone.length < 7);    if (phone.length < 7)    ok = false;
+    showError('err-email',   !email.includes('@')); if (!email.includes('@')) ok = false;
+    showError('err-address', address.length < 5);  if (address.length < 5)  ok = false;
+
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    const payload = {
+      name:    document.getElementById('f-name').value.trim(),
+      phone:   document.getElementById('f-phone').value.trim(),
+      email:   document.getElementById('f-email').value.trim(),
+      address: document.getElementById('f-address').value.trim(),
+      message: document.getElementById('f-message').value.trim(),
+    };
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        form.reset();
+        successBox.classList.add('show');
+        submitBtn.textContent = 'Request Estimate';
+        submitBtn.disabled = false;
+        setTimeout(() => successBox.classList.remove('show'), 6000);
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      submitBtn.textContent = 'Try Again';
+      submitBtn.disabled = false;
+      alert('Something went wrong. Please call us at (844) 760-2914 or try again.');
+    }
+  });
+</script>
+
+</body>
+</html>
